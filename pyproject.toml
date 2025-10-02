@@ -1,0 +1,22 @@
+[build-system]
+requires = ["flit_core >=3.11,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "tkgocryptfs"
+authors = [{name = "Urs Lindegger", email = "urs@linurs.org"}]
+dynamic = ["version", "description"]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pexpect==4.9.0"
+]
+
+[project.urls]
+Home = "https://www.linurs.org"
+
+[project.scripts]
+tkgocryptfs = "tkgocryptfs:application.main"
+
+[tool.flit.module]
+name = "tkgocryptfs"

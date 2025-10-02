@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=tkgocryptfs
+Comment=Python Tkinter Gui for gocryptfs
+Exec=tkgocryptfs
+Icon=tkgocryptfs
+Terminal=false
+Type=Application
+Categories=System;
+StartupNotify=true
