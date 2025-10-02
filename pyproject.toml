@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "tkgocryptfs"
-authors = [{name = "Urs Lindegger", email = "urs@linurs.org"}]
+authors = [{ name = "Urs Lindegger", email = "urs@linurs.org" }]
 dynamic = ["version", "description"]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -20,3 +20,6 @@ tkgocryptfs = "tkgocryptfs:application.main"
 
 [tool.flit.module]
 name = "tkgocryptfs"
+
+[tool.flit.sdist]
+include = ["usr/*"]

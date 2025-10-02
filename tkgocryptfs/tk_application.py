@@ -30,16 +30,16 @@ class AppT:
     def __init__(self) -> None:
         userpath = os.path.expanduser("~")  # check what user
         configdir = userpath + "/.tkgocryptfs"
-        if not os.access(configdir, os.F_OK):  # check if user has a directory containing persistent linux
+        if not os.access(configdir, os.F_OK):  # check if user has a directory containing persistent usr
             os.mkdir(configdir)  # if not create the directory
         configfile = "conf"
         # path to config file
         self.path_to_config = configdir + "/" + configfile
         logging.debug("Config file " + self.path_to_config)
-        if not os.access(self.path_to_config, os.F_OK):  # check if file exists containing persistent linux
+        if not os.access(self.path_to_config, os.F_OK):  # check if file exists containing persistent usr
             os.system("touch " + self.path_to_config)  # if not create the empty file
         path_to_config_file = open(
-            self.path_to_config)  # now read the file containing persistent linux or being empty
+            self.path_to_config)  # now read the file containing persistent usr or being empty
         paths_to_gocryptfs = path_to_config_file.readlines()
         path_to_config_file.close()
 
@@ -77,7 +77,7 @@ class AppT:
         # create the menus
         self.menubar = Menu(self.window)
         file_menu = Menu(self.menubar, tearoff=0)
-        file_menu.add_command(label="Add directory with crypted linux list", command=self.add_crypt_dir_to_list)
+        file_menu.add_command(label="Add directory with crypted usr list", command=self.add_crypt_dir_to_list)
         file_menu.add_command(label="Initialize crypted directory", command=self.init_crypt_dir)
         file_menu.add_command(label="Remove directory from list", command=self.remove_crypt_dir_from_list)
         file_menu.add_separator()
@@ -207,7 +207,7 @@ class AppT:
         :return: None
         """
         items = self.listbox.get(0, END)
-        path_to_config_file = open(self.path_to_config, 'w')  # now write the file containing persistent linux
+        path_to_config_file = open(self.path_to_config, 'w')  # now write the file containing persistent usr
         for i in items:
             path_to_config_file.write(i + "\n")
         path_to_config_file.close()
