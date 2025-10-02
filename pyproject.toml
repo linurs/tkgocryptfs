@@ -22,4 +22,4 @@ tkgocryptfs = "tkgocryptfs:application.main"
 name = "tkgocryptfs"
 
 [tool.flit.sdist]
-include = ["usr/*"]
+include = ["share/*"]
