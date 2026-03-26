@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 button_width = 20
 favicon_name = 'favicon.gif'
 default_ram_dir = "/run/user"
-
+text_show="show"
+text_hide="hide"
 
 class AppT:
     """
@@ -77,7 +78,7 @@ class AppT:
         # create the menus
         self.menubar = Menu(self.window)
         file_menu = Menu(self.menubar, tearoff=0)
-        file_menu.add_command(label="Add directory with crypted usr list", command=self.add_crypt_dir_to_list)
+        file_menu.add_command(label="Add new directory to the list", command=self.add_crypt_dir_to_list)
         file_menu.add_command(label="Initialize crypted directory", command=self.init_crypt_dir)
         file_menu.add_command(label="Remove directory from list", command=self.remove_crypt_dir_from_list)
         file_menu.add_separator()
@@ -91,48 +92,51 @@ class AppT:
         row = 0
         # add the password label and entry field
         self.label = Label(self.window, text='Password')
-        self.label.grid(row=row)
+        self.label.grid(row=row,columnspan=2)
 
         row += 1
         self.password = Entry(self.window, show='*')
         self.password.grid(row=row)
+        self.password_button = Button(master=self.window, text=text_show, width=10,
+                                      command=self.show_password)
+        self.password_button.grid(row=row, column=1)
 
         # add the path label and value
         row += 1
         self.label_path = Label(self.window, text='Path to the crypt directory')
-        self.label_path.grid(row=row)
+        self.label_path.grid(row=row,columnspan=2)
         self.dir_gui = StringVar()
 
         row += 1
         self.path_label = Label(master=self.window, textvariable=self.dir_gui)
-        self.path_label.grid(row=row)
+        self.path_label.grid(row=row,columnspan=2)
 
         row += 1
         self.mounted_gui = StringVar()
         self.mounted_label = Label(master=self.window, textvariable=self.mounted_gui)
-        self.mounted_label.grid(row=row)
+        self.mounted_label.grid(row=row,columnspan=2)
 
         # set up and register the buttons
         row += 1
         self.mount_button = Button(master=self.window, text='Mount gocryptfs', width=button_width,
                                    command=self.encrypted_fs_mount)
-        self.mount_button.grid(row=row)
+        self.mount_button.grid(row=row,columnspan=2)
 
         row += 1
         self.umount_button = Button(master=self.window, text='Umount gocryptfs', width=button_width,
                                     command=self.encrypted_fs_umount)
-        self.umount_button.grid(row=row)
+        self.umount_button.grid(row=row,columnspan=2)
 
         row += 1
         self.open_button = Button(master=self.window, text='Open gocryptfs', width=button_width,
                                   command=self.encrypted_fs_open)
-        self.open_button.grid(row=row)
+        self.open_button.grid(row=row,columnspan=2)
 
         # set up the listbox and its label
         row += 1
         self.listbox = Listbox(self.window, width=50, height=5, justify='center')
         self.listbox.bind('<<ListboxSelect>>', self.listbox_change)
-        self.listbox.grid(row=row)
+        self.listbox.grid(row=row, columnspan=2)
         for item in paths_to_gocryptfs:
             i = item.strip()
             if len(i) > 0:
@@ -148,6 +152,18 @@ class AppT:
         :return:
         """
         self.window.mainloop()
+
+    def show_password(self)-> None:
+        """
+        Show or hide the password
+        :return: None
+        """
+        if    self.password_button["text"] == text_hide:
+            self.password.config(show="*")
+            self.password_button["text"]=text_show
+        else:
+            self.password.config(show="")
+            self.password_button["text"] = text_hide
 
     def is_mounted(self) -> bool:
         """
@@ -263,7 +279,7 @@ class AppT:
                              )  # open new process
         stdout_value, stderr_value = p.communicate()  # communicate is a one time action, afterward p is closed
         if stdout_value == b'':
-            messagebox.showinfo("umount", "Successfully unmounted")
+            messagebox.showinfo("umount", f"Successfully unmounted\n{self.path_to_gocryptfs}")
         else:
             messagebox.showinfo("umount", f"{stdout_value.decode()}")
         self.update_gui()
