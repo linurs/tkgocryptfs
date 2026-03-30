@@ -96,10 +96,10 @@ class AppT:
 
         row += 1
         self.password = Entry(self.window, show='*')
-        self.password.grid(row=row)
+        self.password.grid(row=row, sticky="e")
         self.password_button = Button(master=self.window, text=text_show, width=10,
                                       command=self.show_password)
-        self.password_button.grid(row=row, column=1)
+        self.password_button.grid(row=row, column=1, sticky="w")
 
         # add the path label and value
         row += 1
