@@ -269,7 +269,7 @@ class AppT:
         Un-mounts the encrypted directory
         :return: None
         """
-        cmd = "fusermount -u " + self.mounting_point
+        cmd = "fusermount3 -u " + self.mounting_point
         logger.debug(cmd)
         args_cmd = shlex.split(cmd)
         p = subprocess.Popen(args_cmd,
